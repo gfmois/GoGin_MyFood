@@ -1,0 +1,12 @@
+version: '3'
+services:
+  golang:
+    image: golang:1.19.3-alpine
+    container_name: go_container
+    working_dir: /app
+    restart: always
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    command: "go run main.go"
