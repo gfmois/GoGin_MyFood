@@ -21,7 +21,8 @@ func SetupRoutes() *gin.Engine {
 			reservesGrp.GET("", Controller.GetReserves)
 			reservesGrp.GET("/getBannedDays", Controller.GetBannedDays)
 			reservesGrp.GET("/image", Controller.GetPdfImage)
-			reservesGrp.GET(":id_reserva", Controller.GetReserva)
+			reservesGrp.GET(":id_reserva", Controller.GetReserve)
+			reservesGrp.POST("", Controller.CreateReserve)
 		}
 	}
 
