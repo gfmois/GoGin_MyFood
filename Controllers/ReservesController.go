@@ -2,10 +2,10 @@ package Controller
 
 import (
 	"fmt"
+	"gx_myfood/Common"
+	"gx_myfood/Models"
 	"io/ioutil"
 	"net/http"
-
-	"gx_myfood/Models"
 
 	"github.com/gin-gonic/gin"
 )
@@ -53,11 +53,11 @@ func GetPdfImage(c *gin.Context) {
 	c.Writer.Write(buff)
 }
 
-func GetReserva(c *gin.Context) {
+func GetReserve(c *gin.Context) {
 	var reserva Models.Reserve
 	id_reserva := c.Param("id_reserva")
 
-	if err := Models.GetReserva(&reserva, id_reserva); err != nil {
+	if err := Models.GetReserve(&reserva, id_reserva); err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	}
 
@@ -66,8 +66,12 @@ func GetReserva(c *gin.Context) {
 	})
 }
 
-func GetBody(c *gin.Context) {
-	jsonData, _ := ioutil.ReadAll(c.Request.Body)
-
-	c.JSON(http.StatusOK, jsonData)
+func CreateReserve(c *gin.Context) {
+	var reserva Models.Reserve
+	c.BindJSON(&reserva)
+	reserva.Id_cliente = "asdf"
+	reserva.Estado = "Pendiente"
+	reserva.SetId_Reserva(Common.GenerateRandomIdWithLength(10))
+	Models.CreateReserve(&reserva)
+	c.JSON(200, reserva)
 }

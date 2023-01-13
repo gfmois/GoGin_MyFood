@@ -37,13 +37,25 @@ func GetBannedDays(bannedDays *[]string, comensales string, servicio string) (er
 	for _, value := range holidays {
 		*bannedDays = append(*bannedDays, value.Fecha)
 	}
+
 	return nil
 }
 
-func GetReserva(reserve *Reserve, id_reserva string) (err error) {
+func GetReserve(reserve *Reserve, id_reserva string) (err error) {
 	if err = Config.DB.Find(reserve, "id_reserva = ?", id_reserva).Error; err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func CreateReserve(newReserve *Reserve) (err error) {
+	if err = Config.DB.Create(newReserve).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func (b *Reserve) SetId_Reserva(newId string) {
+	b.Id_reserva = newId
 }

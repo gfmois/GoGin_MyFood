@@ -7,6 +7,8 @@ require (
 	gorm.io/driver/mysql v1.4.4
 )
 
+require github.com/google/uuid v1.3.0 // indirect
+
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/gin-gonic/gin v1.8.1 // indirect
