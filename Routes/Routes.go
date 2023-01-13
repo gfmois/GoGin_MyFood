@@ -14,9 +14,20 @@ func SetupRoutes() *gin.Engine {
 		reservesGrp := api.Group("/reservas")
 		{
 			reservesGrp.GET("", Controller.GetReserves)
+			reservesGrp.GET(":id_reserva", Controller.GetReserva)
 			reservesGrp.GET("/getBannedDays", Controller.GetBannedDays)
 			reservesGrp.GET("/image", Controller.GetPdfImage)
-			reservesGrp.GET(":id_reserva", Controller.GetReserva)
+			reservesGrp.POST("", Controller.GetBody)
+		}
+
+		productsGrp := api.Group("/products")
+		{
+			productsGrp.GET("", Controller.GetProducts)
+			productsGrp.GET(":id_producto", Controller.GetProductById)
+			productsGrp.GET("/alergenos", Controller.GetAllergens)
+			productsGrp.GET("/alergenos/:id_alergeno", Controller.GetAlergeno)
+			// productsGrp.GET("/categories")
+			// productsGrp.GET("/categories/:id_category")
 		}
 	}
 

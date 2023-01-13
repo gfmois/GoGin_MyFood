@@ -65,3 +65,9 @@ func GetReserva(c *gin.Context) {
 		"reserva": reserva,
 	})
 }
+
+func GetBody(c *gin.Context) {
+	jsonData, _ := ioutil.ReadAll(c.Request.Body)
+
+	c.JSON(http.StatusOK, jsonData)
+}

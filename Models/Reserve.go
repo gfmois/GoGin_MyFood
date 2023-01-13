@@ -1,8 +1,6 @@
 package Models
 
 import (
-	"time"
-
 	"gx_myfood/Config"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -18,7 +16,9 @@ func GetReserves(reserve *[]Reserve) (err error) {
 
 func GetBannedDays(bannedDays *[]string, comensales string, servicio string) (err error) {
 	var reserves = []Reserve{}
-	var holidays []time.Time
+	var holidays []struct {
+		Fecha string `json:"fecha"`
+	}
 
 	// Config.DB.Table('reservas').Select("fecha").Group("fecha, tipo").Having("sum(n_comensales + ?) > 50, tipo = ?", comensales, servicio).Scan(&reserves).Error
 
@@ -34,6 +34,9 @@ func GetBannedDays(bannedDays *[]string, comensales string, servicio string) (er
 		*bannedDays = append(*bannedDays, value.Fecha)
 	}
 
+	for _, value := range holidays {
+		*bannedDays = append(*bannedDays, value.Fecha)
+	}
 	return nil
 }
 
