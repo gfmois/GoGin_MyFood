@@ -6,7 +6,10 @@ services:
     working_dir: /app
     restart: always
     volumes:
-      - .:/app
+      - ./backend/go:/app
+      - ./configuration/go/Database.go:/app/Config/Database.go
     ports:
       - 8080:3000
-    command: "go run main.go"
+    command: "go run /app/main.go"
+    networks:
+      - vlsg_network
