@@ -7,7 +7,7 @@ import (
 )
 
 func GetCategories(categories *[]Category) (err error) {
-	if err := Config.DB.Find(categories).Error; err != nil {
+	if err := Config.DB.Preload("Productos").Find(&categories).Error; err != nil {
 		return err
 	}
 
@@ -15,7 +15,7 @@ func GetCategories(categories *[]Category) (err error) {
 }
 
 func GetCategoryById(category *Category, id_categoria string) (err error) {
-	if err := Config.DB.Find(category, "id_categoria = ?", id_categoria).Error; err != nil {
+	if err := Config.DB.Preload("Productos").Find(category, "id_categoria = ?", id_categoria).Error; err != nil {
 		return err
 	}
 

@@ -7,15 +7,15 @@ import (
 )
 
 func GetAllergens(allergen *[]Allergen) (err error) {
-	if err := Config.DB.Find(allergen).Error; err != nil {
+	if err := Config.DB.Preload("Productos").Find(allergen).Error; err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func GetAllergeno(allergen *Allergen, id_allergen string) (err error) {
-	if err := Config.DB.Find(allergen, "id_alergeno = ?", id_allergen).Error; err != nil {
+func GetAllergen(allergen *Allergen, id_allergen string) (err error) {
+	if err := Config.DB.Preload("Productos").Find(allergen, "id_alergeno = ?", id_allergen).Error; err != nil {
 		return err
 	}
 

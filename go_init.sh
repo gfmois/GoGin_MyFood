@@ -4,7 +4,7 @@ echo "Recargando go..."
 docker-compose stop
 docker-compose up &
 echo -n "Servidor iniciandose"
-while ! httping -qc1 localhost:3000/api/ping
+while ! httping -qc1 localhost:8080/api/ping
 do
     echo -n "."
     sleep 1

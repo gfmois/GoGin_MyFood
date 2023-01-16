@@ -2,6 +2,7 @@ package Routes
 
 import (
 	Controller "gx_myfood/Controllers"
+	"gx_myfood/Middlewares"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,23 +19,54 @@ func SetupRoutes() *gin.Engine {
 		})
 		reservesGrp := api.Group("/reservas")
 		{
-			reservesGrp.GET("", Controller.GetReserves)
-			// reservesGrp.GET(":id_reserva", Controller.GetReserva)
+			reservesGrp.GET("/image", Controller.GetImage)
+			reservesGrp.Use(Middlewares.AuthMiddleware(true)).GET("", Controller.GetReserves)
 			reservesGrp.GET("/getBannedDays", Controller.GetBannedDays)
-			reservesGrp.GET("/image", Controller.GetPdfImage)
-			// reservesGrp.POST("", Controller.GetBody)
-			reservesGrp.GET(":id_reserva", Controller.GetReserve)
-			reservesGrp.POST("", Controller.CreateReserve)
+			reservesGrp.Use(Middlewares.AuthMiddleware(true)).GET(":id_reserva", Controller.GetReserve)
+			reservesGrp.Use(Middlewares.AuthMiddleware(true)).GET("/pdf/:id_reserva", Controller.GetPDFReserve)
+			reservesGrp.Use(Middlewares.AuthMiddleware(true)).POST("", Controller.CreateReserve)
 		}
 
-		productsGrp := api.Group("/products")
+		productsGrp := api.Group("/productos")
 		{
 			productsGrp.GET("", Controller.GetProducts)
-			productsGrp.GET(":id_producto", Controller.GetProductById)
+			productsGrp.GET("/filtro", Controller.GetFilteredProducts)
+			productsGrp.GET("/search/:producto", Controller.SearchProducts)
+			productsGrp.GET(":slug_producto", Controller.GetProductDetails)
 			productsGrp.GET("/alergenos", Controller.GetAllergens)
-			productsGrp.GET("/alergenos/:id_alergeno", Controller.GetAlergeno)
-			// productsGrp.GET("/categories")
-			// productsGrp.GET("/categories/:id_category")
+			productsGrp.GET("/alergenos/:id_alergeno", Controller.GetAlergen)
+		}
+
+		categoriesGrp := api.Group("/categorias")
+		{
+			categoriesGrp.GET("", Controller.GetCategories)
+		}
+
+		testGrp := api.Group("/test").Use(Middlewares.AuthMiddleware(true))
+		{
+			testGrp.GET("", func(c *gin.Context) {
+				client_model, _ := c.Get("client_model")
+				c.JSON(200, client_model)
+			})
+		}
+
+		clientsGrp := api.Group("/client").Use(Middlewares.AuthMiddleware(true))
+		{
+			clientsGrp.GET("/profile", Controller.GetProfile)
+			clientsGrp.PUT("/profile", Controller.UpdateProfile)
+		}
+
+		authGrp := api.Group("/auth")
+		{
+			authGrp.POST("/register", Controller.Register)
+			authGrp.POST("/login", Controller.Login)
+		}
+
+		ordersGrp := api.Group("/pedidos").Use(Middlewares.AuthMiddleware(true))
+		{
+			ordersGrp.GET("", Controller.GetOrders)
+			ordersGrp.POST("", Controller.AddOrder)
+
 		}
 	}
 
