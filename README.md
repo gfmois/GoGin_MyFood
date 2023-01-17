@@ -1,6 +1,7 @@
 <p align="center"><a href="https://go.dev" target="_blank"><img src="https://imgs.search.brave.com/UcWtu8lFXd-5WgCgtmkojZPNYxW7Emv_zn12TdenVEg/rs:fit:1200:535:1/g:ce/aHR0cHM6Ly93d3cu/dHJpc29mdC5yby9i/dW5kbGVzL2FwcGZy/b250ZW5kL2ltZy9H/b2xhbmctbG9nby5w/bmc" width="400" alt="Laravel Logo"></a></p>
 
 [go]: https://go.dev/learn/
+[gin]: https://github.com/gin-gonic/gin#readme
 [gorm]: https://gorm.io/docs/
 [myfood]: http://github.com/gfmois/Vue_Laravel_Go_Spring_MyFood.git
 
@@ -10,7 +11,7 @@
 
 ## BUILT WITH
 
-- [Go] - Framework
+- [Gin] - Framework
 - [Gorm] - ORM
 
 ## API
